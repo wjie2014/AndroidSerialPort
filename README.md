@@ -2,7 +2,7 @@
 
 Android 串口操作
 
-ConsoleActivity 实现了双串口同时读取数据，即：链接有两个串口设备的Android设备。
+ConsoleActivity 实现了双串口同时读取数据，即：接有两个串口设备的Android设备。
 
 读取的串口分别为：
 
