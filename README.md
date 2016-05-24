@@ -13,7 +13,14 @@ ConsoleActivity 实现了双串口同时读取数据，即：链接有两个串�
 
 本项目根据项目需求结合android_serialport_api修改完成，如有疑问请联系我。
 
+------
+
 github地址：https://github.com/wjie2014
+
 博客地址：http://blog.studyou.cn/
+
 Gmail邮箱：w489657152@gmail.com
+
 简书地址：http://www.jianshu.com/users/287bfff5fee0/latest_articles
+
+------
