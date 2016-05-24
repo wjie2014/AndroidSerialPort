@@ -1,0 +1,36 @@
+language: android
+sudo: false
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-23.0.2
+  - android-23
+  - extra-google-m2repository
+  - extra-android-m2repository
+jdk: openjdk7
+git:
+  submodules: false
+before_install:
+- git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
+- export ANDROID_NDK_HOME=$HOME/android-ndk-root
+- chmod +x gradlew
+notifications:
+  email: false
+script:
+  - ./gradlew assembleRelease
+before_deploy:
+  - gem install fir-cli
+  - mv app/build/outputs/apk/release/androidserial-release-1-1.1.2-armeabi-2016-04-19.apk app/build/outputs/apk/AndroidSerial.apk
+deploy:
+  provider: releases
+  api_key:
+    secure: gQah+RCMV42L007gB/UHS2zKbbt29LyoNcJ4y/IAUtK0baf6yJOj2gPcWEbxIjlBpPmWyBqceacsuWVkxmbTB8gxjVHRuckIOHwX3NUoVoszpK+/q2FO4v31YyoSJwLsgg6/LBQQc7mvDY6N4kka/UVGJp2iiZPY99mpnTju6cfNf1rcjaTAdDDQZJYfxYLwgIP5PUnvdVzxyc1aIlAob7GNPJ9lGXSwNc64dSPCmcoPN1TAijZcONNEiK5gjRUkBoWLxLxFjq2hjGidydwNnb7ivT3NGnBv7trSLqUWzSavwZq5dpm1nUC9M1nkC7iCsjXYtmB4nlF1dbc7O1cUAS5PIn2MtOelgjNgz+w72rCTiUFeHzTOfMNjsOe/eWdIat1lenOaDMRLCi1d+wI2yxVYMI0nuJ4Fr3Z2tfa1OMguoLBFz/aJZEgqLnHooWHHBvzDBvWraX7xKCXv9TJ0StSKwRw1HWC4XfuHSqcpp4rh7wr8m0sWb1qpMh58+WBTMQcRkXEf+AFx3YTNz3VRCS2o6Us+byEq6DKmYwn45LrL8dgDG6cSXGVM38L+eVkfLO4GI7qzzSFqq9hgyAcmik2U2s+6AjDoMB0QCpjMdxtpV6HOdemXyMlcTKxzb3EHk5WgX/A9MuglOxkVA5bARC7U2EnBHi72tK+dW1+nNEY=
+  file: app/build/outputs/apk/AndroidSerial.apk
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    repo: jp1017/AndroidSerialPort
+after_deploy:
+- fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag $TRAVIS_TAG`"
